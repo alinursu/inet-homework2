@@ -10,6 +10,15 @@ namespace WeatherData
 	{
 		static void Main(string[] args)
 		{
+			string[] lines = DatFileReader.readFile(@"../../weather.dat");
+			Console.WriteLine("Contents of WriteLines2.txt = ");
+			foreach (string line in lines)
+			{
+				Console.WriteLine("\t" + line);
+			}
+
+			Console.WriteLine("Press any key to exit.");
+			Console.ReadKey();
 		}
 	}
 }
