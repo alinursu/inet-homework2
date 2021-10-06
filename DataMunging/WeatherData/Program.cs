@@ -15,23 +15,7 @@ namespace WeatherData
 
 			// Converting text lines into Weather objects
 			foreach (string line in lines) {
-				string[] values = line.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
-
-				Weather weather = new Weather();
-				weather.Day = Int32.Parse(values[0]);
-
-				if (values[1].EndsWith("*"))
-				{
-					values[1] = values[1].Substring(0, values[1].Length - 1);
-				}
-				weather.MaxTemperature = Int32.Parse(values[1]);
-
-				if (values[2].EndsWith("*"))
-				{
-					values[2] = values[2].Substring(0, values[2].Length - 1);
-				}
-				weather.MinTemperature = Int32.Parse(values[2]);
-
+				Weather weather = WeatherObjCreator.createObjectFromLine(line);
 				days.Add(weather);
 			}
 
