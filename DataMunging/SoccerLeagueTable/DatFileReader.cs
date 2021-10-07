@@ -10,7 +10,7 @@ namespace SoccerLeagueTable
     {
 		public static string[] readFile(string filepath)
 		{
-			string text = System.IO.File.ReadAllText(@"../../football.dat");
+			string text = System.IO.File.ReadAllText(filepath);
 			text = String.Join("\n", text.Split('\n').Skip(1));
 
 			List<string> lines = new List<string>(text.Split('\n'));
