@@ -10,7 +10,7 @@ namespace SoccerLeagueTable
 	{
 		static void Main()
 		{
-			string[] lines = DatFileReader.readFile(@"../../weather.dat");
+			string[] lines = DatFileReader.readFile(@"../../football.dat");
 			List<Team> teams = new List<Team>();
 
 			// Converting text lines into Team objects
@@ -18,7 +18,6 @@ namespace SoccerLeagueTable
             {
 				if(line.Length > 0)
 				{
-					Console.WriteLine(line);
 					Team team = TeamObjectCreator.createObjectFromLine(line);
 					teams.Add(team);
 				}
