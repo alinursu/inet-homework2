@@ -1,38 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SoccerLeagueTable
 {
 	class Program
 	{
-		static void Main()
+		private static DatFileReader _datFileReader;
+		private static TeamObjectCreator _teamObjectCreator;
+		
+		private static void Main()
 		{
-			string[] lines = DatFileReader.readFile(@"../../football.dat");
-			List<Team> teams = new List<Team>();
+			_datFileReader = new DatFileReader();
+			_teamObjectCreator = new TeamObjectCreator();
+			Solve();
+		}
+
+		private static void Solve()
+		{
+			var lines = _datFileReader.ReadFile(@"../../football.dat");
+			var teams = new List<Team>();
 
 			// Converting text lines into Team objects
 			foreach(string line in lines)
             {
 				if(line.Length > 0)
 				{
-					Team team = TeamObjectCreator.createObjectFromLine(line);
+					Team team = _teamObjectCreator.CreateObjectFromLine(line);
 					teams.Add(team);
 				}
             }
 
 			// Choosing the team with the smallest difference between 'for' and 'against' number of goals
-			int chosenTeamDifference = 9999;
+			var chosenTeamDifference = 9999;
 			Team chosenTeam = null;
-			foreach (Team team in teams)
+			foreach (var team in teams.Where(team => Math.Abs(team.GoalsFor - team.GoalsAgainst) < chosenTeamDifference))
 			{
-				if (Math.Abs(team.GoalsFor - team.GoalsAgainst) < chosenTeamDifference)
-				{
-					chosenTeam = team;
-					chosenTeamDifference = Math.Abs(team.GoalsFor - team.GoalsAgainst);
-				}
+				chosenTeam = team;
+				chosenTeamDifference = Math.Abs(team.GoalsFor - team.GoalsAgainst);
 			}
 
 			if(chosenTeam != null)
@@ -48,5 +53,8 @@ namespace SoccerLeagueTable
 			Console.WriteLine("Press any key to exit.");
 			Console.ReadKey();
 		}
+
+		
+		
 	}
 }

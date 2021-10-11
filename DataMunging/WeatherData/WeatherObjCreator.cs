@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DryFusion;
 
 namespace WeatherData
 {
-    class WeatherObjCreator
+    class WeatherObjCreator : IObjectCreator<Weather>
     {
-        public static Weather createObjectFromLine(string line)
+        public  Weather CreateObjectFromLine(string line)
 		{
-			string[] values = line.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+			var values = line.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 			Weather weather = new Weather();
 
 			weather.Day = Int32.Parse(values[0]);

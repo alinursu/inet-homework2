@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DryFusion;
 
 namespace SoccerLeagueTable
 {
-    class TeamObjectCreator
+    class TeamObjectCreator : IObjectCreator<Team>
     {
-        public static Team createObjectFromLine(string line)
+        public  Team CreateObjectFromLine(string line)
         {
             string[] values = line.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
             Team team = new Team();

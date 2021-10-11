@@ -1,34 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DryFusion;
 
 namespace WeatherData
 {
-	class Program
+	internal static class Program
 	{
-		static void Main()
+		private static void Main()
 		{
-			string[] lines = DatFileReader.readFile(@"../../weather.dat");
-			List<Weather> days = new List<Weather>();
+			Solve(new DatFileReader(),new WeatherObjCreator());
+		}
+		private static void Solve(IDatFileReader datFileReader,WeatherObjCreator weatherObjCreator)
+		{
+			var lines = datFileReader.ReadFile(@"../../weather.dat");
+			var days = lines.Select(weatherObjCreator.CreateObjectFromLine).ToList();
 
 			// Converting text lines into Weather objects
-			foreach (string line in lines) {
-				Weather weather = WeatherObjCreator.createObjectFromLine(line);
-				days.Add(weather);
-			}
 
 			// Choosing the day with the smallest temperature spread
-			int chosenDayTemperatureSpread = 9999;
+			var chosenDayTemperatureSpread = 9999;
 			Weather chosenDay = null;
 
-			foreach(Weather day in days) {
-				if (day.MaxTemperature - day.MinTemperature < chosenDayTemperatureSpread)
-				{
-					chosenDayTemperatureSpread = day.MaxTemperature - day.MinTemperature;
-					chosenDay = day;
-				}
+			foreach (var day in days.Where(day => day.MaxTemperature - day.MinTemperature < chosenDayTemperatureSpread))
+			{
+				chosenDayTemperatureSpread = day.MaxTemperature - day.MinTemperature;
+				chosenDay = day;
 			}
 
 			if (chosenDay != null)
