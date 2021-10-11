@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Linq;
-using DryFusion;
 
 namespace WeatherData
 {
 	internal static class Program
 	{
+		private static DatFileReader _datFileReader;
+		private static WeatherObjCreator _weatherObjCreator;
+		
 		private static void Main()
 		{
-			Solve(new DatFileReader(),new WeatherObjCreator());
+			_datFileReader = new DatFileReader();
+			_weatherObjCreator = new WeatherObjCreator();
+			Solve();
 		}
-		private static void Solve(IDatFileReader datFileReader,WeatherObjCreator weatherObjCreator)
+		private static void Solve()
 		{
-			var lines = datFileReader.ReadFile(@"../../weather.dat");
-			var days = lines.Select(weatherObjCreator.CreateObjectFromLine).ToList();
+			var lines = _datFileReader.ReadFile(@"../../weather.dat");
+			var days = lines.Select(_weatherObjCreator.CreateObjectFromLine).ToList();
 
 			// Converting text lines into Weather objects
 
