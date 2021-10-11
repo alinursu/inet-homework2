@@ -6,6 +6,9 @@ namespace WeatherData
 {
 	internal static class Program
 	{
+
+// TODO: Creeaza doua campuri private pentru DatFileReader si WeatherObjCreator (similar ca la SoccerLeagueTable).
+
 		private static void Main()
 		{
 			Solve(new DatFileReader(),new WeatherObjCreator());
@@ -16,6 +19,8 @@ namespace WeatherData
 			var days = lines.Select(weatherObjCreator.CreateObjectFromLine).ToList();
 
 			// Converting text lines into Weather objects
+
+// TODO: Creeaza o interfata comuna (ex: IComputeOutput), cu o functie care va fi implementata pentru fiecare problema 
 
 			// Choosing the day with the smallest temperature spread
 			var chosenDayTemperatureSpread = 9999;
