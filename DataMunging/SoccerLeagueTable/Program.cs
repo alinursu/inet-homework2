@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace SoccerLeagueTable
 {
@@ -8,11 +6,13 @@ namespace SoccerLeagueTable
 	{
 		private static DatFileReader _datFileReader;
 		private static TeamObjectCreator _teamObjectCreator;
-		
+		private static ComputeOutput _computeOutput;
+
 		private static void Main()
 		{
 			_datFileReader = new DatFileReader();
 			_teamObjectCreator = new TeamObjectCreator();
+			_computeOutput = new ComputeOutput();
 			Solve();
 		}
 
@@ -30,31 +30,8 @@ namespace SoccerLeagueTable
 					teams.Add(team);
 				}
             }
-
-			// Choosing the team with the smallest difference between 'for' and 'against' number of goals
-			var chosenTeamDifference = 9999;
-			Team chosenTeam = null;
-			foreach (var team in teams.Where(team => Math.Abs(team.GoalsFor - team.GoalsAgainst) < chosenTeamDifference))
-			{
-				chosenTeam = team;
-				chosenTeamDifference = Math.Abs(team.GoalsFor - team.GoalsAgainst);
-			}
-
-			if(chosenTeam != null)
-            {
-                Console.WriteLine("Team " + chosenTeam.Name + " is the team with the smallest difference between 'for' " +
-					"and 'against' number of goals (" + chosenTeamDifference + ").");
-            }
-			else
-            {
-                Console.WriteLine("No teams found in football.dat");
-            }
-
-			Console.WriteLine("Press any key to exit.");
-			Console.ReadKey();
+			_computeOutput.Compute(teams);
 		}
-
-		
 		
 	}
 }

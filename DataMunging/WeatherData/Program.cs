@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace WeatherData
 {
@@ -7,11 +6,13 @@ namespace WeatherData
 	{
 		private static DatFileReader _datFileReader;
 		private static WeatherObjCreator _weatherObjCreator;
+		private static ComputeOutput _computeOutput;
 		
 		private static void Main()
 		{
 			_datFileReader = new DatFileReader();
 			_weatherObjCreator = new WeatherObjCreator();
+			_computeOutput = new ComputeOutput();
 			Solve();
 		}
 		private static void Solve()
@@ -19,30 +20,7 @@ namespace WeatherData
 			var lines = _datFileReader.ReadFile(@"../../weather.dat");
 			var days = lines.Select(_weatherObjCreator.CreateObjectFromLine).ToList();
 
-			// Converting text lines into Weather objects
-
-			// Choosing the day with the smallest temperature spread
-			var chosenDayTemperatureSpread = 9999;
-			Weather chosenDay = null;
-
-			foreach (var day in days.Where(day => day.MaxTemperature - day.MinTemperature < chosenDayTemperatureSpread))
-			{
-				chosenDayTemperatureSpread = day.MaxTemperature - day.MinTemperature;
-				chosenDay = day;
-			}
-
-			if (chosenDay != null)
-			{
-				Console.WriteLine("Day " + chosenDay.Day + " " +
-					"is the day with the smallest temperature spread (" + chosenDayTemperatureSpread + ")");
-			}
-			else
-			{
-				Console.WriteLine("No days found in weather.dat");
-			}
-
-			Console.WriteLine("Press any key to exit.");
-			Console.ReadKey();
+			_computeOutput.Compute(days);
 		}
 	}
 }
